@@ -12,6 +12,7 @@ do
 	#images_dir="$raw_data_dir/$cname/IMAGES"
 	images_dir="$base_dir/IMAGES/$class_dir_name/"
 	mkdir -p "$images_dir"
+	echo "URLs File $urls_file"
 	echo "Class: $class_dir_name. Total # of urls: $(cat $urls_file | wc -l)"
 	echo "Downloading images..."
 	xargs -n 20 -P 8 wget -nc -q --timeout=5 --tries=2 -P "$images_dir" < "$urls_file"
