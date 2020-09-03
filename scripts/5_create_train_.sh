@@ -3,30 +3,26 @@
 scripts_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 base_dir="$(dirname "$scripts_dir")"
 raw_data_dir="$base_dir/raw_data"
+images_data_dir="$base_dir/IMAGES"
 data_dir="$base_dir/data"
-
-declare -a class_names=(
-	"neutral"
-	"drawings"
-	"sexy"
-	"porn"
-	"hentai"
-	)
 
 train_dir="$data_dir/train"
 mkdir -p "$train_dir"
 
 echo "Copying image to the training folder"
-for cname in "${class_names[@]}"
+for cname in $raw_data_dir/* ;
 do
-	raw_data_class_dir="$raw_data_dir/$cname"
+	#raw_data_class_dir="$raw_data_dir/$cname"
+	class_dir_name="${cname##*/}"
+	raw_data_class_dir="$images_data_dir/$class_dir_name"
+	echo "raw_data_class_dir $raw_data_class_dir"
 	if [[ -d "$raw_data_class_dir" ]]
 	then
-		mkdir -p "$train_dir/$cname"
+		mkdir -p "$train_dir/$class_dir_name"
 		find "$raw_data_class_dir" -type f \( -name '*.jpg' -o -name '*.jpeg' \) -print0 |
 		while IFS= read -r -d '' jpg_f
 		do
-		    cp "$jpg_f" "$train_dir/$cname/$(uuidgen).jpg"
+		    cp "$jpg_f" "$train_dir/$class_dir_name/$(uuidgen).jpg"
 		done
 	fi
 done
