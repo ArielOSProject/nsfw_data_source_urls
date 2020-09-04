@@ -1,5 +1,20 @@
 # NSFW data source URLs
 
+## Usage
+In order to get the trained model, following steps need to be performed:
+1. run scripts/2_download_from_urls.sh script to download images
+2. run scripts/5_create_train.sh to create train data
+3. run scripts/6_create_test.sh to create test data
+
+Once images are download and train and test data created, you need to check the validity of images. 
+For this, you can use https://www.coderslagoon.com/ BadPeggy tool.
+
+After you remove the corrupted images, you can start training your model. To do this, execute following command:
+python nsfw_tensor_flow_model_generator.py.
+
+## Changes to tensorflow
+
+
 ## Description
 
 Repository contains lists of URLs that will help you download NSFW images, this set can be used in building big enough dataset to train robust NSFM classification model.
