@@ -10,13 +10,18 @@ from tflite_model_maker import model_spec
 
 import matplotlib.pyplot as plt
 
+inception_v3_spec = model_spec.ImageModelSpec(uri='https://tfhub.dev/google/imagenet/inception_v3/feature_vector/1')
+inception_v3_spec.input_image_shape = [299, 299]
+
 image_train_data="data/train"
 image_test_data="data/test"
 
 train_data = ImageClassifierDataLoader.from_folder(image_train_data)
 test_data = ImageClassifierDataLoader.from_folder(image_test_data)
 
-model = image_classifier.create(train_data)
+#model = image_classifier.create(train_data)
+
+model = image_classifier.create(train_data, model_spec=inception_v3_spec)
 
 loss, accuracy = model.evaluate(test_data)
 
