@@ -19,10 +19,16 @@ image_test_data="data/test"
 train_data = ImageClassifierDataLoader.from_folder(image_train_data)
 test_data = ImageClassifierDataLoader.from_folder(image_test_data)
 
+validation_data, rest_data = train_data.split(0.8)
+
 #model = image_classifier.create(train_data)
 
-model = image_classifier.create(train_data, model_spec=inception_v3_spec)
+model = image_classifier.create(train_data, model_spec=inception_v3_spec, validation_data=validation_data, epochs=10)
+
+model.summary()
 
 loss, accuracy = model.evaluate(test_data)
 
 model.export(export_dir='./tfmodel')
+
+model.evaluate_tflite('./tfmodel/model.tflite', test_data)
