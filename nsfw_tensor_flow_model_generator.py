@@ -10,7 +10,8 @@ from tflite_model_maker import model_spec
 
 import matplotlib.pyplot as plt
 
-inception_v3_spec = model_spec.ImageModelSpec(uri='https://tfhub.dev/google/imagenet/inception_v3/feature_vector/1')
+inception_v3_spec = model_spec.ImageModelSpec(uri='https://tfhub.dev/google/inaturalist/inception_v3/feature_vector/4')
+
 inception_v3_spec.input_image_shape = [299, 299]
 
 image_train_data="data/train"
@@ -19,7 +20,7 @@ image_test_data="data/test"
 train_data = ImageClassifierDataLoader.from_folder(image_train_data)
 test_data = ImageClassifierDataLoader.from_folder(image_test_data)
 
-validation_data, rest_data = train_data.split(0.8)
+validation_data, rest_data = test_data.split(0.8)
 
 #model = image_classifier.create(train_data)
 
@@ -29,6 +30,6 @@ model.summary()
 
 loss, accuracy = model.evaluate(test_data)
 
-model.export(export_dir='./tfmodel')
+model.export(export_dir='./tfmodel/', label_filename='nsfw_labels.txt')
 
 model.evaluate_tflite('./tfmodel/model.tflite', test_data)
