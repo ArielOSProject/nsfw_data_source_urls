@@ -15,16 +15,19 @@ inception_v3_spec = model_spec.ImageModelSpec(uri='https://tfhub.dev/google/inat
 inception_v3_spec.input_image_shape = [299, 299]
 
 image_train_data="data/train"
-image_test_data="data/test"
+#image_test_data="data/test"
 
-train_data = ImageClassifierDataLoader.from_folder(image_train_data)
-test_data = ImageClassifierDataLoader.from_folder(image_test_data)
+image_data_set = ImageClassifierDataLoader.from_folder(image_train_data)
+train_data, rest_data = image_data_set.split(0.8)
+validation_data, test_data = rest_data.split(0.5)
 
-validation_data, rest_data = test_data.split(0.8)
+# test_data = ImageClassifierDataLoader.from_folder(image_test_data)
+# train_data, validation_data = train_data.split(0.9)
+
 
 #model = image_classifier.create(train_data)
 
-model = image_classifier.create(train_data, model_spec=inception_v3_spec, validation_data=validation_data, epochs=10)
+model = image_classifier.create(train_data, model_spec=inception_v3_spec, validation_data=validation_data, epochs=5, shuffle=True)
 
 model.summary()
 
