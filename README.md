@@ -12,6 +12,12 @@ For this, you can use https://www.coderslagoon.com/ BadPeggy tool.
 After you remove the corrupted images, you can start training your model. To do this, execute following command:
 python nsfw_tensor_flow_model_generator.py.
 
+## Dataset cleanup
+
+1. Remove images less then 1kb size 
+2. Remove any file that is not a *.jpg file
+3. Scan and remove bad images with BadPegy
+
 ## Changes to tensorflow
 
 

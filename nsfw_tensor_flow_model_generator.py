@@ -10,15 +10,18 @@ from tflite_model_maker import model_spec
 
 import matplotlib.pyplot as plt
 
-inception_v3_spec = model_spec.ImageModelSpec(uri='https://tfhub.dev/google/inaturalist/inception_v3/feature_vector/4')
+# inception_v3_spec = model_spec.ImageModelSpec(uri='https://tfhub.dev/google/imagenet/inception_v3/feature_vector/4')
+# inception_v3_spec.input_image_shape = [299, 299]
 
-inception_v3_spec.input_image_shape = [299, 299]
+efficient_net_lite = model_spec.ImageModelSpec(uri='https://tfhub.dev/tensorflow/efficientnet/lite4/feature-vector/2')
+efficient_net_lite.input_image_shape = [224, 224]
 
-image_train_data="data/train"
+#image_train_data="data/train"
 #image_test_data="data/test"
+image_train_data="/media/mikalackis/4dc729a9-15db-48a8-b1db-b616676d3cb2/Ariel/tensorflow/train"
 
 image_data_set = ImageClassifierDataLoader.from_folder(image_train_data)
-train_data, rest_data = image_data_set.split(0.8)
+train_data, rest_data = image_data_set.split(0.9)
 validation_data, test_data = rest_data.split(0.5)
 
 # test_data = ImageClassifierDataLoader.from_folder(image_test_data)
@@ -27,7 +30,7 @@ validation_data, test_data = rest_data.split(0.5)
 
 #model = image_classifier.create(train_data)
 
-model = image_classifier.create(train_data, model_spec=inception_v3_spec, validation_data=validation_data, epochs=5, shuffle=True)
+model = image_classifier.create(train_data, model_spec=efficient_net_lite, validation_data=validation_data, epochs=5, shuffle=True)
 
 model.summary()
 

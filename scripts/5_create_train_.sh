@@ -2,14 +2,15 @@
 
 scripts_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 base_dir="$(dirname "$scripts_dir")"
-raw_data_dir="$base_dir/raw_data"
-images_data_dir="$base_dir/IMAGES"
+external_dir="/media/mikalackis/Transcend"
+raw_data_dir="$external_dir/IMAGES"
+images_data_dir="$external_dir/IMAGES"
 data_dir="$base_dir/data"
-
-train_dir="$data_dir/train"
+train_dir="/media/mikalackis/3719d14c-5eaf-4c7a-8230-25219a0b08c7/train"
 mkdir -p "$train_dir"
 
 echo "Copying image to the training folder"
+mkdir -p "$train_dir/nsfw"
 for cname in $raw_data_dir/* ;
 do
 	#raw_data_class_dir="$raw_data_dir/$cname"
@@ -18,11 +19,12 @@ do
 	echo "raw_data_class_dir $raw_data_class_dir"
 	if [[ -d "$raw_data_class_dir" ]]
 	then
-		mkdir -p "$train_dir/$class_dir_name"
+		#mkdir -p "$train_dir/$class_dir_name"
 		find "$raw_data_class_dir" -type f \( -name '*.jpg' -o -name '*.jpeg' \) -print0 |
 		while IFS= read -r -d '' jpg_f
 		do
-		    cp "$jpg_f" "$train_dir/$class_dir_name/$(uuidgen).jpg"
+		    cp "$jpg_f" "$train_dir/nsfw/$(uuidgen).jpg"
+			#rm "$jpg_f"
 		done
 	fi
 done

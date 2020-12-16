@@ -3,6 +3,7 @@
 scripts_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 base_dir="$(dirname "$scripts_dir")"
 raw_data_dir="$base_dir/raw_data"
+external_dir="/media/mikalackis/Transcend"
 
 for cname in $raw_data_dir/* ;
 do
@@ -10,7 +11,7 @@ do
 	echo "class dir name $class_dir_name"
 	urls_file="$raw_data_dir/$class_dir_name/urls_$class_dir_name.txt"
 	#images_dir="$raw_data_dir/$cname/IMAGES"
-	images_dir="$base_dir/IMAGES/$class_dir_name/"
+	images_dir="$external_dir/IMAGES/$class_dir_name/"
 	mkdir -p "$images_dir"
 	echo "URLs File $urls_file"
 	echo "Class: $class_dir_name. Total # of urls: $(cat $urls_file | wc -l)"
