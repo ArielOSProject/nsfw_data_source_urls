@@ -18,7 +18,11 @@ python nsfw_tensor_flow_model_generator.py.
 2. Remove any file that is not a *.jpg file
 3. Scan and remove bad images with BadPegy
 
-## Changes to tensorflow
+## Running tensorflow
+
+1. Create and activate venv environment
+2. Update path to images inside nsfw_tensor_flow_model_generator.py
+3. run script nsfw_tensor_flow_model_generator.py 
 
 
 ## Description
